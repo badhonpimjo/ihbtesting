@@ -1,0 +1,474 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Portfolio Projects by IH Badhon - Web Apps, CP Tools & Frontend Work"
+    />
+    <title>Projects | IH Badhon</title>
+    <!-- Reuse your existing base styles -->
+    <link rel="stylesheet" href="scroll.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <!-- Project-specific styles -->
+    <style>
+      :root {
+        --card-bg: #ffffff;
+        --card-hover: #f8fafc;
+        --accent-hover: #3b82f6;
+        --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .projects-hero {
+        min-height: 60vh;
+        background:
+          linear-gradient(
+            135deg,
+            rgba(15, 23, 42, 0.85),
+            rgba(37, 99, 235, 0.6)
+          ),
+          url("./img/5edited.jpg") center/cover;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 6rem 1rem 4rem;
+      }
+
+      .projects-hero h1 {
+        font-family: var(--font-heading);
+        font-size: clamp(2.5rem, 5vw, 4.5rem);
+        color: var(--white);
+        margin-bottom: 1rem;
+      }
+      .projects-hero p {
+        color: #cbd5e1;
+        font-size: clamp(1rem, 2vw, 1.25rem);
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      /* Filters */
+      .project-filters {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.75rem;
+        margin-bottom: 3rem;
+      }
+
+      .filter-btn {
+        padding: 0.6rem 1.4rem;
+        background: transparent;
+        border: 2px solid var(--border);
+        border-radius: 50px;
+        font-weight: 500;
+        color: var(--text);
+        cursor: pointer;
+        transition: var(--transition-smooth);
+      }
+
+      .filter-btn:hover,
+      .filter-btn.active {
+        background: var(--primary);
+        border-color: var(--primary);
+        color: var(--white);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+      }
+
+      /* Projects Grid */
+      .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 2rem;
+        margin-bottom: 4rem;
+      }
+
+      .project-card {
+        background: var(--card-bg);
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+        box-shadow: var(--shadow-md);
+        transition: var(--transition-smooth);
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      .project-card.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .project-card:hover {
+        transform: translateY(-8px);
+        box-shadow: var(--shadow-lg);
+      }
+
+      .project-image {
+        position: relative;
+        height: 220px;
+        overflow: hidden;
+      }
+
+      .project-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.6s ease;
+      }
+
+      .project-card:hover .project-image img {
+        transform: scale(1.08);
+      }
+
+      .project-overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(15, 23, 42, 0.7);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .project-card:hover .project-overlay {
+        opacity: 1;
+      }
+
+      .project-overlay a {
+        width: 45px;
+        height: 45px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--white);
+        color: var(--primary);
+        border-radius: 50%;
+        font-size: 1.1rem;
+        transition: var(--transition-smooth);
+      }
+
+      .project-overlay a:hover {
+        background: var(--primary);
+        color: var(--white);
+        transform: scale(1.1);
+      }
+
+      .project-info {
+        padding: 1.5rem;
+      }
+
+      .project-info h3 {
+        font-size: var(--fs-xl);
+        color: var(--text-dark);
+        margin-bottom: 0.5rem;
+      }
+
+      .project-info p {
+        color: var(--text-light);
+        font-size: var(--fs-sm);
+        margin-bottom: 1rem;
+        line-height: 1.5;
+      }
+
+      .tech-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+
+      .tech-tags span {
+        background: #f1f5f9;
+        color: var(--primary-dark);
+        padding: 0.25rem 0.6rem;
+        border-radius: 4px;
+        font-size: 0.75rem;
+        font-weight: 500;
+        letter-spacing: 0.02em;
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .projects-grid {
+          grid-template-columns: 1fr;
+        }
+        .project-filters {
+          gap: 0.5rem;
+        }
+        .filter-btn {
+          padding: 0.5rem 1rem;
+          font-size: 0.85rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav class="nav">
+      <div class="nav-center">
+        <div class="logo-container">
+          <a href="index.html" class="logo"
+            ><h3>IH<span>Badhon</span></h3></a
+          >
+          <button type="button" class="nav-toggle">
+            <i class="fas fa-bars"></i>
+          </button>
+        </div>
+        <div class="links-container">
+          <ul class="links">
+            <li><a href="index.html" class="nav-link">home</a></li>
+            <li><a href="index.html#about" class="nav-link">about</a></li>
+            <li>
+              <a href="index.html#problem-solving" class="nav-link"
+                >Activities</a
+              >
+            </li>
+            <li>
+              <a href="projects.html" class="nav-link active">Projects</a>
+            </li>
+            <li><a href="index.html#services" class="nav-link">services</a></li>
+            <li><a href="index.html#contact" class="nav-link">contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero -->
+    <header class="projects-hero">
+      <div class="hero-content">
+        <h1 class="fade-in">Featured <span>Projects</span></h1>
+        <p class="fade-in">
+          A curated collection of web applications, algorithmic tools, and
+          frontend experiments.
+        </p>
+      </div>
+    </header>
+
+    <main class="section">
+      <div class="container">
+        <!-- Filters -->
+        <div class="project-filters fade-in">
+          <button class="filter-btn active" data-filter="all">
+            All Projects
+          </button>
+          <button class="filter-btn" data-filter="web">Web Development</button>
+          <button class="filter-btn" data-filter="cp">CP & Algorithms</button>
+          <button class="filter-btn" data-filter="ui">UI/UX & Frontend</button>
+        </div>
+
+        <!-- Grid -->
+        <div class="projects-grid">
+          <!-- Project 1 -->
+          <article class="project-card fade-in" data-category="web">
+            <div class="project-image">
+              <img
+                src="./img/project-web1.jpg"
+                alt="E-Commerce Dashboard"
+                loading="lazy"
+              />
+              <div class="project-overlay">
+                <a href="#" title="Live Demo"
+                  ><i class="fas fa-external-link-alt"></i
+                ></a>
+                <a href="#" title="Source Code"
+                  ><i class="fab fa-github"></i
+                ></a>
+              </div>
+            </div>
+            <div class="project-info">
+              <h3>E-Commerce Admin Panel</h3>
+              <p>
+                Full-stack dashboard with real-time sales analytics, inventory
+                tracking, and role-based authentication.
+              </p>
+              <div class="tech-tags">
+                <span>React</span><span>Node.js</span><span>PostgreSQL</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Project 2 -->
+          <article class="project-card fade-in" data-category="cp">
+            <div class="project-image">
+              <img
+                src="./img/project-cp1.jpg"
+                alt="Contest Tracker"
+                loading="lazy"
+              />
+              <div class="project-overlay">
+                <a href="#" title="Live Demo"
+                  ><i class="fas fa-external-link-alt"></i
+                ></a>
+                <a href="#" title="Source Code"
+                  ><i class="fab fa-github"></i
+                ></a>
+              </div>
+            </div>
+            <div class="project-info">
+              <h3>Contest Fetcher CLI</h3>
+              <p>
+                Automated script that scrapes upcoming contests from Codeforces,
+                AtCoder & CodeChef with push notifications.
+              </p>
+              <div class="tech-tags">
+                <span>Python</span><span>BeautifulSoup</span><span>Cron</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Project 3 -->
+          <article class="project-card fade-in" data-category="ui">
+            <div class="project-image">
+              <img
+                src="./img/project-ui1.jpg"
+                alt="Portfolio Kit"
+                loading="lazy"
+              />
+              <div class="project-overlay">
+                <a href="#" title="Live Demo"
+                  ><i class="fas fa-external-link-alt"></i
+                ></a>
+                <a href="#" title="Source Code"
+                  ><i class="fab fa-github"></i
+                ></a>
+              </div>
+            </div>
+            <div class="project-info">
+              <h3>Modern Portfolio Template</h3>
+              <p>
+                Lightweight, accessible, and performance-optimized portfolio
+                with dark mode and smooth scroll animations.
+              </p>
+              <div class="tech-tags">
+                <span>HTML5</span><span>CSS3</span><span>Vanilla JS</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Project 4 -->
+          <article class="project-card fade-in" data-category="web">
+            <div class="project-image">
+              <img
+                src="./img/project-web2.jpg"
+                alt="Task Manager"
+                loading="lazy"
+              />
+              <div class="project-overlay">
+                <a href="#" title="Live Demo"
+                  ><i class="fas fa-external-link-alt"></i
+                ></a>
+                <a href="#" title="Source Code"
+                  ><i class="fab fa-github"></i
+                ></a>
+              </div>
+            </div>
+            <div class="project-info">
+              <h3>Kanban Taskflow</h3>
+              <p>
+                Drag-and-drop task manager with local storage persistence,
+                priority tagging, and export to PDF.
+              </p>
+              <div class="tech-tags">
+                <span>JavaScript</span><span>CSS Grid</span
+                ><span>HTML5 Drag API</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Project 5 -->
+          <article class="project-card fade-in" data-category="cp">
+            <div class="project-image">
+              <img
+                src="./img/project-cp2.jpg"
+                alt="Visualizer"
+                loading="lazy"
+              />
+              <div class="project-overlay">
+                <a href="#" title="Live Demo"
+                  ><i class="fas fa-external-link-alt"></i
+                ></a>
+                <a href="#" title="Source Code"
+                  ><i class="fab fa-github"></i
+                ></a>
+              </div>
+            </div>
+            <div class="project-info">
+              <h3>Algorithm Visualizer</h3>
+              <p>
+                Interactive web app demonstrating sorting, pathfinding & tree
+                traversal algorithms step-by-step.
+              </p>
+              <div class="tech-tags">
+                <span>Canvas API</span><span>ES6+</span
+                ><span>CSS3 Animations</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Project 6 -->
+          <article class="project-card fade-in" data-category="ui">
+            <div class="project-image">
+              <img
+                src="./img/project-ui2.jpg"
+                alt="Component Library"
+                loading="lazy"
+              />
+              <div class="project-overlay">
+                <a href="#" title="Live Demo"
+                  ><i class="fas fa-external-link-alt"></i
+                ></a>
+                <a href="#" title="Source Code"
+                  ><i class="fab fa-github"></i
+                ></a>
+              </div>
+            </div>
+            <div class="project-info">
+              <h3>UI Component Pack</h3>
+              <p>
+                Reusable, themeable UI components built with CSS variables,
+                accessible markup, and zero dependencies.
+              </p>
+              <div class="tech-tags">
+                <span>CSS Variables</span><span>Flexbox</span
+                ><span>Web Components</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <p class="brand">~ IH BADHON ~</p>
+        <p class="contact-info">
+          Mobile: +880 1879-536873 | Email: badhonb363@gmail.com
+        </p>
+        <p class="copyright">
+          Copyright &copy; <span id="date"></span>. All rights reserved.
+        </p>
+        <a href="#" class="top-link" aria-label="Back to top"
+          ><i class="fas fa-arrow-up"></i
+        ></a>
+      </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="scroll.js"></script>
+    <script src="projects.js"></script>
+  </body>
+</html>
